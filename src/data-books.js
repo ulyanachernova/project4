@@ -7,13 +7,12 @@ export const buttons = document.querySelectorAll('.nav-link'),
             loadMore = document.querySelector('.button-load-more');
 
 
-
  export const sendRequest = (url, cb) => {
      console.log(url)
             fetch(url)
                 .then(response => {
-                    const result = response.json();
-                    return result;
+                    let resultResponse = response.json();
+                    return resultResponse;
                 })
                 .then(data => {
                     if (cb) {
@@ -71,7 +70,7 @@ export const buttons = document.querySelectorAll('.nav-link'),
          const cardBlock = `
             <div class="card">
                 <div class="card-image">
-                    <img src="${result.image()}">
+                    <img src="${result.image()}" alt='img'>
                 </div>
                 <div class="card-info">          
                     <p class="card-info-authors">${result.authors()}</p>
@@ -89,6 +88,9 @@ export const buttons = document.querySelectorAll('.nav-link'),
             cards = cards  + cardBlock;
           });
       output.innerHTML = cards;
+
+
+
       localStorage.setItem('pictures', cards);
  }
 
@@ -104,12 +106,12 @@ document.addEventListener("DOMContentLoaded", () => {
         letResult(maxResult);
 });
 
-buttons.forEach((btn, index) => {
+buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
         let activeBtn = document.querySelector(".active-nav-li");
         activeBtn.classList.remove('active-nav-li');
         btn.classList.add('active-nav-li');
-        points.forEach((point, index) => {
+        points.forEach((point) => {
             let activePoint = document.querySelector(".active-nav-point");
             activePoint.classList.remove('.active-nav-point');
             point.classList.add('.active-nav-point');
@@ -124,7 +126,13 @@ loadMore.addEventListener('click', () => {
     letResult(maxResult);
 });
 
+for (const output of document.querySelectorAll('.output')) {
+    output.addEventListener('click', e => {
+        if (!e.target.matches('.button-buy-now')) return;
+        e.target.classList.add('added');
 
+    })
+}
 
 
 
