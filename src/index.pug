@@ -5,7 +5,7 @@ head
     title Bookshop
     link(rel='stylesheet' type='text/css' href='main.css')
 body
-    header.header-block
+    header
         div.container
             div.header-logo Bookshop
             ul.header-site-options
@@ -18,11 +18,14 @@ body
                 li.header-li
                     a(href='') BLOG
             div.header-icons
-                img(src='../images/user.svg' alt='user')
-                img(src='../images/search.svg' alt='search')
-                img(src='../images/shop%20bag.svg' alt='shop-bag')
-    div.container
-        main
+                a(href='')
+                    img(src='../images/user.svg' alt='user')
+                a(href='')
+                    img(src='../images/search.svg' alt='search')
+                a(href='')
+                    img(src='../images/shop%20bag.svg' alt='shop-bag')
+    main
+        div.container
             div.slider-block
                 div.slider-line
                     img(src='../images/banner 1.png' alt='sale')

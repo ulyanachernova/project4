@@ -32,7 +32,7 @@ body {
 
 /*Header*/
 
-.header-block {
+header {
   width: 100%;
   position: fixed;
   z-index: 100;
@@ -73,13 +73,16 @@ body {
   color: rgba(92, 106, 121, 1);
   cursor: pointer;
   font-weight: bold;
-
   :hover {
     color: rgba(28, 42, 57, 1);
   }
+  a {
+    color: rgba(92, 106, 121, 1);
+    text-decoration: none;
+  }
 }
 
-.active-option {
+.active-option a {
   color: rgba(28, 42, 57, 1);
 }
 

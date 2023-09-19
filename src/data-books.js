@@ -1,15 +1,16 @@
+export let apiKey = "AIzaSyDx-mGbcsl9RXeb3RGdW-ed_GmKYGTWnM4",
+            maxResult = 6;
 
-export const apiKey = "AIzaSyDx-mGbcsl9RXeb3RGdW-ed_GmKYGTWnM4";
+export const buttons = document.querySelectorAll('.nav-link'),
+            points = document.querySelectorAll(".nav-link-point"),
+            output = document.querySelector(".output"),
+            loadMore = document.querySelector('.button-load-more');
 
 
-export const buttons = document.querySelectorAll('.nav-link');
-export const points = document.querySelectorAll(".nav-link-point");
-export const output = document.querySelector(".output");
 
  export const sendRequest = (url, cb) => {
      console.log(url)
             fetch(url)
-                // https://www.googleapis.com/books/v1/volumes?q="subject:Architecture"&key=AIzaSyDx-mGbcsl9RXeb3RGdW-ed_GmKYGTWnM4&printType=books&startIndex=0&maxResults=6&langRestrict=en
                 .then(response => {
                     const result = response.json();
                     return result;
@@ -26,7 +27,6 @@ export const output = document.querySelector(".output");
 
   export const displayResult = (apiData) => {
      let cards = '';
-     // console.log(apiData.items);
       apiData.items.forEach(item => {
           const result = {
               image: function() {
@@ -92,20 +92,17 @@ export const output = document.querySelector(".output");
       localStorage.setItem('pictures', cards);
  }
 
- export const letResult = () => {
+ export const letResult = (maxResult) => {
      let activeBtn = document.querySelector(".active-nav-li");
-     let activePoint = document.querySelector('.active-nav-point');
-     sendRequest(`https://www.googleapis.com/books/v1/volumes?q="subject:${activeBtn.textContent}"&key=${apiKey}&printType=books&startIndex=0&maxResults=6&langRestrict=en`, displayResult);
+     sendRequest(`https://www.googleapis.com/books/v1/volumes?q="subject:${activeBtn.textContent}"&key=${apiKey}&printType=books&startIndex=0&maxResults=${maxResult}&langRestrict=en`, displayResult);
  }
 
 // fetch(`https://www.googleapis.com/books/v1/volumes?q="subject:${activeBtn.value}"&key=${apiKey}&printType=books&startIndex=0&maxResults=6&langRestrict=en`)
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    let activeBtn = document.querySelector(".active-nav-li");
-        letResult();
-}
-    );
+        letResult(maxResult);
+});
 
 buttons.forEach((btn, index) => {
     btn.addEventListener('click', () => {
@@ -117,16 +114,15 @@ buttons.forEach((btn, index) => {
             activePoint.classList.remove('.active-nav-point');
             point.classList.add('.active-nav-point');
         });
-        letResult();
+        maxResult = 6;
+        letResult(maxResult);
         });
 });
 
-// points.forEach((point, index) => {
-//     point.addEventListener('click', () => {
-//
-//         letResult();
-//     });
-// });
+loadMore.addEventListener('click', () => {
+    maxResult += 6;
+    letResult(maxResult);
+});
 
 
 
