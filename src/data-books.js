@@ -3,12 +3,10 @@ export let apiKey = "AIzaSyDx-mGbcsl9RXeb3RGdW-ed_GmKYGTWnM4",
 
 export const buttons = document.querySelectorAll('.nav-link'),
             points = document.querySelectorAll(".nav-link-point"),
-            output = document.querySelector(".output"),
-            loadMore = document.querySelector('.button-load-more');
+            output = document.querySelector(".output");
 
 
  export const sendRequest = (url, cb) => {
-     console.log(url)
             fetch(url)
                 .then(response => {
                     let resultResponse = response.json();
@@ -43,10 +41,21 @@ export const buttons = document.querySelectorAll('.nav-link'),
 
               title: item.volumeInfo.title,
               averageRating: function() {
-                  let resultRating = '';
+                  let averageRating = '';
                   if (item.volumeInfo.averageRating) {
-                      resultRating = item.volumeInfo.averageRating;
-                  } return resultRating;
+                  averageRating =`
+                    <div class="rating__body">
+                          <div class="rating__active" style="width:${item.volumeInfo.averageRating / 0.05}%"></div>
+                          <div class="rating__items">
+                              <input type="radio" class="rating__item" value="1" name="rating">
+                               <input type="radio" class="rating__item" value="2" name="rating">
+                               <input type="radio" class="rating__item" value="3" name="rating">
+                               <input type="radio" class="rating__item" value="4" name="rating">
+                               <input type="radio" class="rating__item" value="5" name="rating">
+                          </div>
+                    </div>`
+                  }
+                  return averageRating;
               },
               ratingsCount: function() {
                   let resultCount = '';
@@ -75,8 +84,8 @@ export const buttons = document.querySelectorAll('.nav-link'),
                 <div class="card-info">          
                     <p class="card-info-authors">${result.authors()}</p>
                     <p class="card-info-title">${result.title}</p>
-                    <div class="rating-block">
-                        <p class='rating-block-result'>${result.averageRating()}</pclassrating-block-result>
+                    <div class="rating">
+                        ${result.averageRating()}
                         <p class="rating-block-result">&nbsp;${result.ratingsCount()}</p>
                     </div>
                     <p class="card-block-description">${result.description()}</p>
@@ -85,13 +94,10 @@ export const buttons = document.querySelectorAll('.nav-link'),
                 </div>
             </div>
         `;
+
             cards = cards  + cardBlock;
           });
       output.innerHTML = cards;
-
-
-
-      localStorage.setItem('pictures', cards);
  }
 
  export const letResult = (maxResult) => {
@@ -101,9 +107,12 @@ export const buttons = document.querySelectorAll('.nav-link'),
 
 // fetch(`https://www.googleapis.com/books/v1/volumes?q="subject:${activeBtn.value}"&key=${apiKey}&printType=books&startIndex=0&maxResults=6&langRestrict=en`)
 
-
 document.addEventListener("DOMContentLoaded", () => {
         letResult(maxResult);
+    //     const userSession = localStorage.getItem('isClick');
+    //     if (userSession) {
+    //         document.querySelector('.button-buy-now').classList.add('added');
+    // }
 });
 
 buttons.forEach((btn) => {
@@ -121,18 +130,41 @@ buttons.forEach((btn) => {
         });
 });
 
-loadMore.addEventListener('click', () => {
-    maxResult += 6;
-    letResult(maxResult);
-});
 
-for (const output of document.querySelectorAll('.output')) {
-    output.addEventListener('click', e => {
-        if (!e.target.matches('.button-buy-now')) return;
-        e.target.classList.add('added');
 
+if(maxResult) {
+    let buttonLoadForAdd = `
+        <button class="button button-load-more">LOAD MORE</button>
+        `
+    let blockShowMore = document.querySelector('.block-show-more');
+    blockShowMore.innerHTML = buttonLoadForAdd;
+    let buttonLoadMore = document.querySelector('.button-load-more');
+    buttonLoadMore.addEventListener('click', () => {
+        maxResult += 6;
+        letResult(maxResult);
     })
+    }
+
+document.querySelector('.output').onclick = function(e) {
+    if (!e.target.matches('.button-buy-now')) return;
+    if (e.target.classList.contains('added')) {
+        e.target.innerHTML = 'BUY NOW';
+        e.target.classList.remove('added');
+        localStorage.setItem('id_shipping_address_daneu','false');
+    } else {
+        e.target.classList.add('added');
+        e.target.innerHTML = 'IN THE CART';
+        localStorage.setItem('id_shipping_address_daneu','true');
+    }
 }
+
+// function isActive() {
+//     let isActive=localStorage.getItem('id_shipping_address_daneu');
+//     let action=isActive==true?'addClass':'removeClass';
+//     document.querySelector('.button-buy-now')[action]('added');
+// }
+
+
 
 
 

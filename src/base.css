@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: Montserrat, sans-serif;
   src: url("../fonts/Montserrat-Regular.ttf");
@@ -13,11 +14,15 @@
   src: url("../fonts/Montserrat-Italic.ttf");
   font-style: italic;
 }
-body {
+* {
   font-family: Montserrat, sans-serif;
+}
+
+body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 1440px;
   margin: 0;
 }
 
@@ -177,7 +182,7 @@ nav {
 
 .nav-li {
   list-style-type: none;
-  font-size: 16px;
+  font-size: 12px;
   color: rgb(92, 106, 121);
   margin-top: 23px;
   cursor: pointer;
@@ -201,6 +206,10 @@ nav {
   margin-right: 10px;
 }
 
+.active-nav-li {
+  font-size: 16px;
+  font-weight: bold;
+}
 .active-nav-li div {
   background-color: rgb(117, 106, 211);
 }
@@ -244,22 +253,72 @@ nav {
 .card-info-authors {
   color: rgb(92, 106, 121);
   font-size: 10px;
+  margin-bottom: 5px;
 }
 
 .card-info-title {
   color: rgb(28, 42, 57);
   font-weight: bold;
   margin-bottom: 0;
+  margin-top: 0;
 }
 
-.rating-block {
+.rating {
   display: flex;
-  height: 20px;
-  margin-top: 4px;
+  align-items: flex-end;
+  margin-top: 1px;
+  margin-bottom: 2px;
 }
 
 .rating-block-result {
-  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 3px;
+  font-size: 10px;
+  color: rgb(92, 106, 121);
+}
+
+.rating__body {
+  position: relative;
+}
+
+.rating__body::before {
+  content: "★★★★★";
+  display: block;
+  color: rgb(238, 237, 245);
+}
+
+.rating__active {
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.rating__active::before {
+  content: "★★★★★";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  color: rgb(242, 201, 76);
+}
+
+.rating__items {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.rating__item {
+  margin: 0px 1px 0 0;
+  height: 100%;
+  opacity: 0;
 }
 
 .card-block-description {
@@ -290,10 +349,12 @@ nav {
 
 .button-load-more {
   margin-top: 40px;
+  margin-bottom: 50px;
 }
 
 .added {
   border: 1px solid rgb(238, 237, 245);
+  color: rgb(92, 106, 121);
 }
 
 /*# sourceMappingURL=base.css.map */
