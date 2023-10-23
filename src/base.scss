@@ -1,23 +1,6 @@
 $shadow: 0 25px 30px -10px rgba(53, 49, 84, 0.28);
 
-@font-face {
-  font-family: Montserrat, sans-serif;
-  src: url("../fonts/Montserrat-Regular.ttf");
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Montserrat, sans-serif;
-  src: url("../fonts/Montserrat-Bold.ttf");
-  font-weight: bold;
-}
-
-@font-face {
-  font-family: Montserrat, sans-serif;
-  src: url("../fonts/Montserrat-Italic.ttf");
-  font-style: italic;
-}
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&display=swap');
 
 * {
   font-family: Montserrat, sans-serif;
@@ -75,28 +58,47 @@ header {
 
 .header-li {
   list-style-type: none;
-  color: rgba(92, 106, 121, 1);
   cursor: pointer;
-  font-weight: bold;
-  :hover {
-    color: rgba(28, 42, 57, 1);
-  }
   a {
     color: rgba(92, 106, 121, 1);
     text-decoration: none;
+    font-weight: 700;
+  }
+  :hover {
+    font-weight: 900;
+    color: rgba(28, 42, 57, 1);
   }
 }
 
 .active-option a {
+  font-weight: 900;
   color: rgba(28, 42, 57, 1);
 }
 
 .header-icons {
   height: 17px;
+  position: relative;
   img {
     padding-left: 40px;
     cursor: pointer;
   }
+}
+
+.number-of-books {
+  position: absolute;
+  background-color: rgba(255, 53, 58, 1);
+  color: white;
+  font-size: 10px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  text-align: center;
+  margin-left: 151px;
+  margin-top: -12px;
+}
+
+.not-visible {
+  display: none;
 }
 
 /*Main*/
@@ -180,12 +182,17 @@ main {
 .second-block {   display: flex; }
 
 nav {
-  width: 416px;
   height: 710px;
+  width: 416px;
   background-color: rgba(239, 238, 246, 1);
   margin-left: -160px;
-  display: flex;
-  justify-content: center;
+  //display: flex;
+  //justify-content: center;
+}
+
+.nav-ul {
+  margin-left: 120px;
+  margin-top: 45px;
 }
 
 .nav-li {
@@ -337,6 +344,11 @@ nav {
   overflow: hidden;
   color: rgba(92, 106, 121, 1);
   font-size: 10px;
+}
+
+.retain-price {
+  font-size: 13px;
+  font-weight: bold;
 }
 
 .button {
