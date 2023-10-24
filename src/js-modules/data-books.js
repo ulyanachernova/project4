@@ -30,7 +30,6 @@ export function sendRequest (url, cb) {
 }
 
 export function displayResult (apiData) {
-    console.log(apiData)
     localStorageUtil.numbersInCard()
     buttonLoadMore.classList.add('not-visible');
     if (apiData.items) {

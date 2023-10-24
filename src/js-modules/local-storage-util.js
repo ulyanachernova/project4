@@ -16,7 +16,6 @@ class LocalStorageUtil {
     putProducts(id) {
         let products = this.getProducts();
         let pushProduct = false;
-        console.log(products)
         const index = products.indexOf(id);
 
         if (index === -1) {
@@ -36,7 +35,6 @@ class LocalStorageUtil {
         if (productsLocalStorage !== null) {
             let sum = (JSON.parse(productsLocalStorage)).length;
             localStorage.setItem('items-in-cart', `${sum}`);
-            console.log(sum)
             if (sum > 0) {
                 numberOfBooks.classList.remove('not-visible');
                 numberOfBooks.innerHTML = sum;
