@@ -14,43 +14,48 @@ export function letResult (startIndex) {
 }
 
 export function sendRequest (url, cb) {
-            fetch(url)
-                .then(response => {
-                    let resultResponse = response.json();
-                    return resultResponse;
-                })
-                .then(data => {
-                    if (cb) { cb(data) }
-                })
-                .catch(error => console.log(error.message));
-    }
+    fetch(url)
+        .then(response => {
+            let resultResponse = response.json();
+            return resultResponse;
+        })
+        .then(data => {
+            if (cb) {
+                cb(data)
+            }
+        })
+        .catch(error => {
+            console.log(error.message);
+        })
+}
 
 export function displayResult (apiData) {
+    console.log(apiData)
     localStorageUtil.numbersInCard()
     buttonLoadMore.classList.add('not-visible');
-     if (apiData.items) {
-         apiData.items.forEach(item => {
-             const result = {
-                 image: function () {
-                     let resultImage = '../images/placeholder.png';
-                     if (item.volumeInfo.imageLinks) {
-                         resultImage = item.volumeInfo.imageLinks.thumbnail;
-                     }
-                     return resultImage;
-                 },
-                 authors: function () {
-                     let resultAuthors = '';
-                     if (item.volumeInfo.authors) {
-                         resultAuthors = item.volumeInfo.authors;
-                     }
-                     return resultAuthors;
-                 },
+    if (apiData.items) {
+        apiData.items.forEach(item => {
+            const result = {
+                image: function () {
+                    let resultImage = '../images/placeholder.png';
+                    if (item.volumeInfo.imageLinks) {
+                        resultImage = item.volumeInfo.imageLinks.thumbnail;
+                    }
+                    return resultImage;
+                },
+                authors: function () {
+                    let resultAuthors = '';
+                    if (item.volumeInfo.authors) {
+                        resultAuthors = item.volumeInfo.authors;
+                    }
+                    return resultAuthors;
+                },
 
-                 title: item.volumeInfo.title,
-                 averageRating: function () {
-                     let averageRating = '';
-                     if (item.volumeInfo.averageRating) {
-                         averageRating = `
+                title: item.volumeInfo.title,
+                averageRating: function () {
+                    let averageRating = '';
+                    if (item.volumeInfo.averageRating) {
+                        averageRating = `
                     <div class="rating__body">
                           <div class="rating__active" style="width:${item.volumeInfo.averageRating / 0.05}%"></div>
                           <div class="rating__items">
@@ -61,45 +66,45 @@ export function displayResult (apiData) {
                                <input type="radio" class="rating__item" value="5" name="rating">
                           </div>
                     </div>`
-                     }
-                     return averageRating;
-                 },
-                 ratingsCount: function () {
-                     let resultCount = '';
-                     if (item.volumeInfo.ratingsCount) {
-                         resultCount = `${item.volumeInfo.ratingsCount} review`
-                     }
-                     return resultCount;
-                 },
-                 description: function () {
-                     let resultDescription = '';
-                     if (item.volumeInfo.description) {
-                         resultDescription = item.volumeInfo.description;
-                     }
-                     return resultDescription;
-                 },
-                 retailPrice: function () {
-                     let resultPrice = '';
-                     if (item.saleInfo.retailPrice) {
-                         resultPrice = `$${(item.saleInfo.retailPrice.amount / 98.20).toFixed(2)}`;
-                     }
-                     return resultPrice;
-                 },
-                 added: function () {
-                     let add = '';
-                     let text = '';
-                     let id = item.id;
-                     const productStore = localStorageUtil.getProducts();
-                     if (productStore.indexOf(id) === -1) {
-                         text = 'BUY NOW';
-                     } else {
-                         add = 'added';
-                         text = 'IN THE CART';
-                     }
-                     return `${add}" id='${id}'>${text}`;
-                 }
-             }
-             const cardBlock = `
+                    }
+                    return averageRating;
+                },
+                ratingsCount: function () {
+                    let resultCount = '';
+                    if (item.volumeInfo.ratingsCount) {
+                        resultCount = `${item.volumeInfo.ratingsCount} review`
+                    }
+                    return resultCount;
+                },
+                description: function () {
+                    let resultDescription = '';
+                    if (item.volumeInfo.description) {
+                        resultDescription = item.volumeInfo.description;
+                    }
+                    return resultDescription;
+                },
+                retailPrice: function () {
+                    let resultPrice = '';
+                    if (item.saleInfo.retailPrice) {
+                        resultPrice = `$${(item.saleInfo.retailPrice.amount / 98.20).toFixed(2)}`;
+                    }
+                    return resultPrice;
+                },
+                added: function () {
+                    let add = '';
+                    let text = '';
+                    let id = item.id;
+                    const productStore = localStorageUtil.getProducts();
+                    if (productStore.indexOf(id) === -1) {
+                        text = 'BUY NOW';
+                    } else {
+                        add = 'added';
+                        text = 'IN THE CART';
+                    }
+                    return `${add}" id='${id}'>${text}`;
+                }
+            }
+            const cardBlock = `
             <div class="card">
                 <div class="card-image">
                     <img src="${result.image()}" alt='img'>
@@ -117,16 +122,12 @@ export function displayResult (apiData) {
                 </div>
             </div>
         `;
-             cards = cards + cardBlock;
-         });
-         output.innerHTML = cards;
-         buttonLoadMore.classList.remove('not-visible');
-     }
- }
-
-document.addEventListener("DOMContentLoaded", () => {
-    letResult(startIndex);
-});
+            cards = cards + cardBlock;
+        });
+        output.innerHTML = cards;
+        buttonLoadMore.classList.remove('not-visible');
+    }
+}
 
 window.addEventListener('click', function (e) {
     if (e.target.closest('.nav-link')) {
@@ -161,5 +162,9 @@ document.querySelector('.output').onclick = function(e) {
     localStorageUtil.putProducts(id);
     localStorageUtil.numbersInCard();
 }
+
+
+
+
 
 
