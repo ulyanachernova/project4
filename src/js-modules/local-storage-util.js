@@ -1,3 +1,4 @@
+let numberOfBooks = document.querySelector(".number-of-books");
 
 class LocalStorageUtil {
     constructor() {
@@ -14,16 +15,35 @@ class LocalStorageUtil {
 
     putProducts(id) {
         let products = this.getProducts();
+        let pushProduct = false;
         console.log(products)
         const index = products.indexOf(id);
 
         if (index === -1) {
             products.push(id);
+            pushProduct = true;
         } else {
             products.splice(index, 1);
         }
 
         localStorage.setItem(this.keyName,JSON.stringify(products));
+
+        return { pushProduct, products };
+    }
+
+    numbersInCard() {
+        let productsLocalStorage = localStorage.getItem(this.keyName);
+        if (productsLocalStorage !== null) {
+            let sum = (JSON.parse(productsLocalStorage)).length;
+            localStorage.setItem('items-in-cart', `${sum}`);
+            console.log(sum)
+            if (sum > 0) {
+                numberOfBooks.classList.remove('not-visible');
+                numberOfBooks.innerHTML = sum;
+            } else {
+                numberOfBooks.classList.add('not-visible');
+            }
+        }
     }
 }
 

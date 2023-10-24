@@ -1,18 +1,18 @@
-export {localStorageUtil} from './localStorageUtil'
-// Переменные
-import {LocalStorageUtil, localStorageUtil} from "./localStorageUtil";
+import {localStorageUtil} from "./local-storage-util";
 
 export let startIndex = 0,
             cards = '',
-            listInLocalStorage = [],
-            numberOfBooks = document.querySelector(".number-of-books"),
             buttonLoadMore = document.querySelector('.button-load-more');
 
 export const apiKey = "AIzaSyDx-mGbcsl9RXeb3RGdW-ed_GmKYGTWnM4",
             points = document.querySelectorAll(".nav-link-point"),
             output = document.querySelector(".output");
 
- // Функции
+export function letResult (startIndex) {
+    let activeBtn = document.querySelector(".active-nav-li");
+    sendRequest(`https://www.googleapis.com/books/v1/volumes?q="subject:${activeBtn.textContent}"&key=${apiKey}&printType=books&startIndex=${startIndex}&maxResults=6&langRestrict=en`, displayResult);
+}
+
 export function sendRequest (url, cb) {
             fetch(url)
                 .then(response => {
@@ -20,18 +20,14 @@ export function sendRequest (url, cb) {
                     return resultResponse;
                 })
                 .then(data => {
-                    if (cb) {
-                        cb(data);
-                    }
+                    if (cb) { cb(data) }
                 })
-                .catch( error => {
-                    console.log(error.message);
-                });
+                .catch(error => console.log(error.message));
     }
 
 export function displayResult (apiData) {
-    console.log(apiData)
-      buttonLoadMore.classList.add('not-visible');
+    localStorageUtil.numbersInCard()
+    buttonLoadMore.classList.add('not-visible');
      if (apiData.items) {
          apiData.items.forEach(item => {
              const result = {
@@ -66,7 +62,6 @@ export function displayResult (apiData) {
                           </div>
                     </div>`
                      }
-
                      return averageRating;
                  },
                  ratingsCount: function () {
@@ -90,6 +85,19 @@ export function displayResult (apiData) {
                      }
                      return resultPrice;
                  },
+                 added: function () {
+                     let add = '';
+                     let text = '';
+                     let id = item.id;
+                     const productStore = localStorageUtil.getProducts();
+                     if (productStore.indexOf(id) === -1) {
+                         text = 'BUY NOW';
+                     } else {
+                         add = 'added';
+                         text = 'IN THE CART';
+                     }
+                     return `${add}" id='${id}'>${text}`;
+                 }
              }
              const cardBlock = `
             <div class="card">
@@ -105,7 +113,7 @@ export function displayResult (apiData) {
                     </div>
                     <p class="card-block-description">${result.description()}</p>
                     <p class="retain-price">${result.retailPrice()}</p>
-                    <button class="button button-buy-now" id="${item.id}">BUY NOW</button>
+                    <button class="button button-buy-now ${result.added()}</button>
                 </div>
             </div>
         `;
@@ -116,46 +124,7 @@ export function displayResult (apiData) {
      }
  }
 
-export function letResult (startIndex) {
-     let activeBtn = document.querySelector(".active-nav-li");
-     sendRequest(`https://www.googleapis.com/books/v1/volumes?q="subject:${activeBtn.textContent}"&key=${apiKey}&printType=books&startIndex=${startIndex}&maxResults=6&langRestrict=en`, displayResult);
- }
-
-export function numberOfItemsInLocalStorage() {
-     let userSession = localStorage.getItem("number-of-books");
-     if (userSession > 0) {
-         numberOfBooks.classList.remove('not-visible');
-         numberOfBooks.innerHTML = userSession;
-     } else numberOfBooks.classList.add('not-visible');
- };
-
-export function InTheCartPlusOne () {
-    if (numberOfBooks.classList.contains("not-visible")) {
-        numberOfBooks.classList.remove('not-visible');
-        numberOfBooks.innerText = ++numberOfBooks.innerText;
-        localStorage.setItem('number-of-books', numberOfBooks.innerText);
-    } else {
-        numberOfBooks.innerText = ++numberOfBooks.innerText;
-        localStorage.setItem('number-of-books', numberOfBooks.innerText);
-    }
-}
-
-export function InTheCartMinusOne () {
-    if (parseInt(numberOfBooks.innerText) === 1) {
-        numberOfBooks.classList.add('not-visible');
-        numberOfBooks.innerText = --numberOfBooks.innerText;
-        localStorage.setItem('number-of-books', numberOfBooks.innerText);
-    } else {
-        numberOfBooks.innerText = --numberOfBooks.innerText;
-        localStorage.setItem('number-of-books', numberOfBooks.innerText);
-    }
-}
-
-// fetch(`https://www.googleapis.com/books/v1/volumes?q="subject:${activeBtn.value}"&key=${apiKey}&printType=books&startIndex=0&maxResults=6&langRestrict=en`)
-
-// Обработчики событий
 document.addEventListener("DOMContentLoaded", () => {
-    numberOfItemsInLocalStorage();
     letResult(startIndex);
 });
 
@@ -184,35 +153,13 @@ document.querySelector('.output').onclick = function(e) {
     if (e.target.classList.contains('added')) {
         e.target.innerHTML = 'BUY NOW';
         e.target.classList.remove('added');
-        InTheCartMinusOne();
-        let id = e.target.id;
-        localStorageUtil.putProducts(id);
-
-
     } else {
         e.target.classList.add('added');
         e.target.innerHTML = 'IN THE CART';
-        InTheCartPlusOne();
-        let id = e.target.id;
-        localStorageUtil.putProducts(id);
     }
+    let id = e.target.id;
+    localStorageUtil.putProducts(id);
+    localStorageUtil.numbersInCard();
 }
 
-//     let link ='https://www.googleapis.com/books/v1/volumes?q=%22subject:Architecture%22&key=AIzaSyDx-mGbcsl9RXeb3RGdW-ed_GmKYGTWnM4&printType=books&startIndex=0&langRestrict=en'
 
-export function SaveDataToLocalStorage() {
-    let cards = document.querySelectorAll(".card");
-    console.log(cards)
-    let list = [];
-    cards.forEach((card) => {
-        list.push({id: 'id', 'is-it-in-shopping-card': "true"})
-    })
-    console.log(list)
-}
-SaveDataToLocalStorage();
-
-export function isActive() {
-    let isActive=localStorage.getItem('is-it-in-shopping-card');
-    let action=isActive==true?'addClass':'removeClass';
-    document.querySelector('.button-buy-now')[action]('added');
-}
