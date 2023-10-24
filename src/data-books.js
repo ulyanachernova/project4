@@ -1,11 +1,14 @@
+export {localStorageUtil} from './localStorageUtil'
 // Переменные
+import {LocalStorageUtil, localStorageUtil} from "./localStorageUtil";
+
 export let startIndex = 0,
             cards = '',
+            listInLocalStorage = [],
             numberOfBooks = document.querySelector(".number-of-books"),
             buttonLoadMore = document.querySelector('.button-load-more');
 
 export const apiKey = "AIzaSyDx-mGbcsl9RXeb3RGdW-ed_GmKYGTWnM4",
-            buttons = document.querySelectorAll('.nav-link'),
             points = document.querySelectorAll(".nav-link-point"),
             output = document.querySelector(".output");
 
@@ -27,6 +30,7 @@ export function sendRequest (url, cb) {
     }
 
 export function displayResult (apiData) {
+    console.log(apiData)
       buttonLoadMore.classList.add('not-visible');
      if (apiData.items) {
          apiData.items.forEach(item => {
@@ -101,7 +105,7 @@ export function displayResult (apiData) {
                     </div>
                     <p class="card-block-description">${result.description()}</p>
                     <p class="retain-price">${result.retailPrice()}</p>
-                    <button class="button button-buy-now">BUY NOW</button>
+                    <button class="button button-buy-now" id="${item.id}">BUY NOW</button>
                 </div>
             </div>
         `;
@@ -181,25 +185,34 @@ document.querySelector('.output').onclick = function(e) {
         e.target.innerHTML = 'BUY NOW';
         e.target.classList.remove('added');
         InTheCartMinusOne();
+        let id = e.target.id;
+        localStorageUtil.putProducts(id);
+
+
     } else {
         e.target.classList.add('added');
         e.target.innerHTML = 'IN THE CART';
         InTheCartPlusOne();
+        let id = e.target.id;
+        localStorageUtil.putProducts(id);
     }
 }
 
+//     let link ='https://www.googleapis.com/books/v1/volumes?q=%22subject:Architecture%22&key=AIzaSyDx-mGbcsl9RXeb3RGdW-ed_GmKYGTWnM4&printType=books&startIndex=0&langRestrict=en'
 
+export function SaveDataToLocalStorage() {
+    let cards = document.querySelectorAll(".card");
+    console.log(cards)
+    let list = [];
+    cards.forEach((card) => {
+        list.push({id: 'id', 'is-it-in-shopping-card': "true"})
+    })
+    console.log(list)
+}
+SaveDataToLocalStorage();
 
-// function isActive() {
-//     let isActive=localStorage.getItem('id_shipping_address_daneu');
-//     let action=isActive==true?'addClass':'removeClass';
-//     document.querySelector('.button-buy-now')[action]('added');
-// }
-
-
-localStorage.removeItem('number-of-books');
-
-    let link ='https://www.googleapis.com/books/v1/volumes?q=%22subject:Architecture%22&key=AIzaSyDx-mGbcsl9RXeb3RGdW-ed_GmKYGTWnM4&printType=books&startIndex=0&langRestrict=en'
-console.log(link)
-
-
+export function isActive() {
+    let isActive=localStorage.getItem('is-it-in-shopping-card');
+    let action=isActive==true?'addClass':'removeClass';
+    document.querySelector('.button-buy-now')[action]('added');
+}

@@ -1,5 +1,6 @@
 import * as styles from "./base.css";
-import * as databooks from  "./data-books";
+import * as data_books from  "./data-books";
+import * as local_Storage_Util from "./localStorageUtil";
 
 const sliderLine = document.querySelector('.slider-line'),
     dots = document.querySelectorAll(".point");
