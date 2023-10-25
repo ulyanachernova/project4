@@ -18,11 +18,8 @@ body {
 
 /*Header*/
 header {
-  width: 100%;
   position: fixed;
   z-index: 100;
-  left: 0;
-  top: 0;
   background-color: white;
   height: 116px;
   margin: 0 auto;
@@ -99,10 +96,16 @@ header .container {
 }
 
 /*Main*/
+main {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 main .slider-block {
   background-size: cover;
   height: 702px;
-  width: 1120px;
+  left: 0;
   overflow: hidden;
   margin-top: 116px;
 }
@@ -368,6 +371,91 @@ nav {
 .added {
   border: 1px solid rgb(238, 237, 245);
   color: rgb(92, 106, 121);
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    min-width: 375px;
+  }
+  .container {
+    max-width: 340px;
+    margin: auto;
+  }
+  header {
+    width: 100%;
+  }
+  header .container {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .header-site-options {
+    align-items: flex-start;
+    margin-top: 30px;
+    width: 100%;
+  }
+  .header-icons {
+    position: absolute;
+    margin-left: 170px;
+    margin-top: 6px;
+  }
+  .promo-first {
+    margin-left: 0;
+    margin-top: -305px;
+    padding-top: 10px;
+    padding-right: 25px;
+    height: 30px;
+    width: 120px;
+    font-size: 13px;
+  }
+  .promo-first img {
+    margin-left: 10px;
+  }
+  .promo-second {
+    margin-left: 175px;
+    margin-top: -305px;
+    margin-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 26px;
+    padding-right: 15px;
+    height: 30px;
+    width: 130px;
+    font-size: 13px;
+  }
+  .promo-second img {
+    margin-left: 10px;
+  }
+  main .slider-block {
+    height: 300px;
+  }
+  .slider-line {
+    width: 340px;
+    margin-top: 90px;
+  }
+  .slider-line img {
+    width: 340px;
+  }
+  .second-block {
+    flex-direction: column;
+  }
+  nav {
+    width: 290px;
+    height: 430px;
+  }
+  .nav-ul {
+    margin-top: 10px;
+  }
+  .nav-li {
+    margin-top: 0;
+    margin-bottom: 10px;
+    height: 17px;
+  }
+  .active-nav-li p {
+    font-size: 12px;
+  }
+  .output {
+    width: 300px;
+  }
 }
 
 /*# sourceMappingURL=base.css.map */
