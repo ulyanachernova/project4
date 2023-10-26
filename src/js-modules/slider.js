@@ -5,9 +5,9 @@ export let offsetPicLine = 0, // смещение от левого края ф�
     dotIndex = 0;
 
 export function thisSlide (index) {
-    for (let dot of dots) {
+    dots.forEach((dot) => {
         dot.classList.remove('active-point');
-    }
+    })
     dots[index].classList.add('active-point');
 }
 
