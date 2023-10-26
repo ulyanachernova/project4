@@ -382,7 +382,7 @@ nav {
 
 //* mobile version *//
 
-@media screen  and (max-width: 768px){
+@media screen  and (max-width: 768px) {
   body {
     min-width: 375px;
   }
@@ -393,16 +393,19 @@ nav {
 
   header {
     width: 100%;
+    height: 100px;
+
     .container {
       flex-direction: column;
       align-items: flex-start;
       margin-bottom: 10px;
+      margin-top: 10px;
     }
   }
 
   .header-site-options {
     align-items: flex-start;
-    margin-top: 30px;
+    margin-top: 20px;
     width: 100%;
   }
 
@@ -421,6 +424,7 @@ nav {
     height: 30px;
     width: 120px;
     font-size: 13px;
+
     img {
       margin-left: 10px;
     }
@@ -436,6 +440,7 @@ nav {
     height: 30px;
     width: 130px;
     font-size: 13px;
+
     img {
       margin-left: 10px;
     }
@@ -449,6 +454,7 @@ nav {
   .slider-line {
     width: 340px;
     margin-top: 90px;
+
     img {
       width: 340px;
     }
@@ -459,18 +465,29 @@ nav {
   }
 
   nav {
-    width: 290px;
-    height: 430px;
+    width: 340px;
+    height: 250px;
+    margin-left: 0;
   }
 
   .nav-ul {
-    margin-top: 10px;
+    margin-left: 20px;
+    padding-left: 25px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+
   }
 
   .nav-li {
     margin-top: 0;
     margin-bottom: 10px;
     height: 17px;
+    width: 120px;
+
+    div {
+      display: none;
+    }
   }
   .active-nav-li {
     p {
@@ -479,6 +496,29 @@ nav {
   }
   .output {
     width: 300px;
+    margin-left: 0;
+  }
+
+  .card {
+    margin-left: 0;
+    height: 200px;
+  }
+
+  .card-image {
+    height: 200px;
+    width: 130px;
+  }
+
+  .card-info {
+    margin-top: -15px;
+  }
+
+  .block-show-more {
+    margin-left: 5px;
+  }
+
+  .button-load-more {
+    margin-top: -10px;
   }
 }
 

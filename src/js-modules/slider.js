@@ -12,8 +12,8 @@ export function thisSlide (index) {
 }
 
 dots.forEach((dot, index) => {
-    let slideWidth = document.querySelector('.slider-line img').clientWidth;
     dot.addEventListener('click', () => {
+        let slideWidth = document.querySelector('.slider-line img').clientWidth;
         offsetPicLine = slideWidth  * index;
         sliderLine.style.left = -offsetPicLine + 'px';
         dotIndex = index;
@@ -23,11 +23,11 @@ dots.forEach((dot, index) => {
 });
 
 let timer = 0;
-makeTimer(); //Создаем интервал
+ //Создаем интервал
 export function makeTimer(){
-    let slideWidth = document.querySelector('.slider-line img').clientWidth;
     clearInterval(timer) //Очистим интервал, это позволит прервать его работу и отменить перелистывание
     timer = setInterval(function(){
+        let slideWidth = document.querySelector('.slider-line img').clientWidth;
         if (offsetPicLine < ((dots.length-1) * slideWidth)) {
             offsetPicLine += slideWidth;
             dotIndex++
