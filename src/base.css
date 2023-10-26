@@ -5,6 +5,7 @@
 }
 
 body {
+  left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,16 +19,14 @@ body {
 
 /*Header*/
 header {
-  width: 100%;
   position: fixed;
   z-index: 100;
   left: 0;
-  top: 0;
   background-color: white;
   height: 116px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 header .container {
@@ -99,10 +98,16 @@ header .container {
 }
 
 /*Main*/
+main {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 main .slider-block {
   background-size: cover;
   height: 702px;
-  width: 1120px;
+  left: 0;
   overflow: hidden;
   margin-top: 116px;
 }
@@ -368,6 +373,121 @@ nav {
 .added {
   border: 1px solid rgb(238, 237, 245);
   color: rgb(92, 106, 121);
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    min-width: 375px;
+  }
+  .container {
+    max-width: 340px;
+    margin: auto;
+  }
+  header {
+    width: 100%;
+    height: 100px;
+  }
+  header .container {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  .header-site-options {
+    align-items: flex-start;
+    margin-top: 20px;
+    width: 100%;
+  }
+  .header-icons {
+    position: absolute;
+    margin-left: 170px;
+    margin-top: 6px;
+    width: 161px;
+  }
+  .promo-first {
+    margin-left: 0;
+    margin-top: -305px;
+    padding-top: 10px;
+    padding-right: 25px;
+    height: 30px;
+    width: 120px;
+    font-size: 13px;
+  }
+  .promo-first img {
+    margin-left: 10px;
+  }
+  .promo-second {
+    margin-left: 175px;
+    margin-top: -305px;
+    margin-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 26px;
+    padding-right: 15px;
+    height: 30px;
+    width: 130px;
+    font-size: 13px;
+  }
+  .promo-second img {
+    margin-left: 10px;
+  }
+  main .slider-block {
+    height: 300px;
+  }
+  .slider-line {
+    width: 340px;
+    margin-top: 90px;
+  }
+  .slider-line img {
+    width: 340px;
+  }
+  .second-block {
+    flex-direction: column;
+  }
+  nav {
+    width: 340px;
+    height: 250px;
+    margin-left: 0;
+  }
+  .nav-ul {
+    margin-left: 20px;
+    padding-left: 25px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .nav-li {
+    margin-top: 0;
+    margin-bottom: 10px;
+    height: 17px;
+    width: 120px;
+  }
+  .nav-li div {
+    display: none;
+  }
+  .active-nav-li p {
+    font-size: 12px;
+  }
+  .output {
+    width: 300px;
+    margin-left: 0;
+  }
+  .card {
+    margin-left: 0;
+    height: 200px;
+  }
+  .card-image {
+    height: 200px;
+    width: 130px;
+  }
+  .card-info {
+    margin-top: -15px;
+  }
+  .block-show-more {
+    margin-left: 5px;
+  }
+  .button-load-more {
+    margin-top: -10px;
+  }
 }
 
 /*# sourceMappingURL=base.css.map */

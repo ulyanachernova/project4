@@ -26,7 +26,6 @@ class LocalStorageUtil {
         }
 
         localStorage.setItem(this.keyName,JSON.stringify(products));
-
         return { pushProduct, products };
     }
 
